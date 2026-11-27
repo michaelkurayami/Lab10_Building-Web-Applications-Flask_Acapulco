@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+
+<h2>Profile Management</h2>
+
+<h3>My Profile Picture</h3>
+
+{% if user.image_filename %}
+
+    <img
+        src="{{ url_for('static', filename='uploads/' + user.image_filename) }}"
+        alt="Profile Picture"
+        width="150"
+        height="150"
+        style="object-fit: cover; border-radius: 50%;"
+    >
+
+{% else %}
+
+    <p>No profile picture uploaded yet.</p>
+
+{% endif %}
+
+<h3>Update Profile Information</h3>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <div>
+        <label>Display Name:</label>
+        <input
+            type="text"
+            name="display_name"
+            value="{{ user.display_name or '' }}"
+            placeholder="Enter your display name"
+            maxlength="100"
+            required
+        >
+    </div>
+
+    <div>
+        <label>Profile Picture:</label>
+        <input
+            type="file"
+            name="profile_image"
+            accept=".jpg,.jpeg,.png"
+        >
+    </div>
+
+    <button type="submit">Update Profile</button>
+
+</form>
+
+{% endblock %}
